@@ -1,15 +1,24 @@
 import re
-from collections import defaultdict
 
 
-def get_markdown_link(text: str) -> str:
-    link_text = text.split('#')[-1][1:]
+def get_markdown_link(string: str) -> str:
+    # Strip hashes if any
+    if string.startswith('#'):
+        string = string.split('#')[-1][1:]
+
     # Remove extra spaces
-    link_text = " ".join(link_text.split())
-    # Remove all the links
-    link_text = re.sub(r"\[(.+?)\]\(.+?\)", r"\1", link_text)
-    # Remove the special characters
-    link_path = re.sub("[^a-zA-Z0-9\s\u4e00-\u9fff\-]+", "", link_text)
-    # Add hyphens and transform to lowercase
-    link_path = link_path.replace(' ', '-').lower()
-    return link_path
+    string = " ".join(string.split())
+
+    # Remove hyperlinks
+    string = re.sub(r"\[(.+?)\]\(.+?\)", r"\1", string)
+
+    # Remove special characters
+    string = re.sub(r"[^a-zA-Z0-9\s\u4e00-\u9fff\-]+", "", string)
+
+    # Add hyphens
+    string = string.replace(' ', '-')
+
+    # Transform to lowercase
+    string = string.lower()
+
+    return string
