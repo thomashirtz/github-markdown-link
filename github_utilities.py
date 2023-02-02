@@ -2,6 +2,14 @@ import re
 
 
 def get_markdown_link(string: str) -> str:
+    """Create the link to a markdown header using the raw header.
+
+    Args:
+        string: Raw header.
+
+    Returns:
+        The header URL suffix.
+    """
     # Strip hashes if any
     if string.startswith('#'):
         string = string.split('#')[-1][1:]
