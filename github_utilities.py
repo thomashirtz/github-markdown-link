@@ -1,4 +1,5 @@
 import re
+from typing import Union, List
 
 
 def get_markdown_link(string: str) -> str:
@@ -30,3 +31,23 @@ def get_markdown_link(string: str) -> str:
     string = string.lower()
 
     return string
+
+
+def update_text(
+        text: Union[str, List[str]],
+        new_text: str,
+        beginning_flag: str = "<!-- Beginning Flag -->  ",
+        end_flag: str = "<!-- End Flag -->  ",
+):
+    text = text.replace('\r', '')
+
+    if isinstance(text, str):
+        lines = text.split('\n')
+    else:
+        lines = text
+
+    beginning_index = lines.index(beginning_flag)
+    end_index = lines.index(end_flag)
+
+    lines[beginning_index + 1:end_index] = new_text
+    return '\n'.join(lines)
