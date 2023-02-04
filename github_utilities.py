@@ -51,3 +51,23 @@ def update_text(
 
     lines[beginning_index + 1:end_index] = new_text
     return '\n'.join(lines)
+
+
+def update_file(
+        file_path: str,
+        new_text: str,
+        beginning_flag: str = "<!-- Beginning Flag -->  ",
+        end_flag: str = "<!-- End Flag -->  ",
+):
+    with open(file_path, 'rb') as f:
+        raw_content = f.read()
+
+    content = update_text(
+        text=raw_content.decode(),
+        new_text=new_text,
+        beginning_flag=beginning_flag,
+        end_flag=end_flag,
+    )
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content)
